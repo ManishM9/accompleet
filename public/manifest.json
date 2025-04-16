@@ -1,0 +1,21 @@
+{
+    "manifest_version": 3,
+    "name": "Accompleet",
+    "version": "1.0",
+    "description": "Accelerate your learning while on LeetCode!",
+    "action": {
+      "default_popup": "../popup.html",
+      "default_icon": {
+        "16": "./Icons/people_logo.png",
+        "48": "./Icons/people_logo.png",
+        "128": "./Icons/people_logo.png"
+      }
+    },
+    "permissions": [],
+    "icons": {
+      "16": "./Icons/people_logo.png",
+      "48": "./Icons/people_logo.png",
+      "128": "./Icons/people_logo.png"
+    }
+  }
+  
