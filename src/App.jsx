@@ -4,7 +4,7 @@ import './App.css'
 function App() {
   const [count, setCount] = useState(0)
 
-  return (<div>Lala</div>);
+  return (<div className='bg-blue-200'>Lala</div>);
 }
 
 export default App
