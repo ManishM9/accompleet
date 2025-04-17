@@ -5,7 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build:popup": "vite build",
+    "build:content": "vite build --config vite.content.config.js",
+    "build:tailwind": "npx tailwindcss -i ./src/content/tailwind.input.css -o ./dist/content.css --minify",
+    "build": "npm run build:popup && npm run build:content && npm run build:tailwind",
     "lint": "eslint .",
     "preview": "vite preview",
     "watch": "vite build --watch"

@@ -8,15 +8,17 @@ export default defineConfig({
   plugins: [react()],
   build: {
     outDir: 'dist',
+    emptyOutDir: false,
     rollupOptions: {
       input: {
         popup: resolve(__dirname, 'popup.html'),
+        // content: resolve(__dirname, 'src/content/content.jsx'),
       },
       output: {
         entryFileNames: '[name].js',
         chunkFileNames: '[name].js',
         assetFileNames: '[name].[ext]',
-      }
-    }
+      },
+    },
   }
 })
