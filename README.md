@@ -35,7 +35,7 @@ git commit -m "<your_commit_message>"
 # Step 5: Push your branch to GitHub
 git push origin <your_branch_name>
 
-# Go to Github UI -> Pull Requests -> base: main | comare: <your_branch_name>  -> Resolve conflicts -> Merge.
+# Go to Github UI -> Pull Requests -> base: main | compare: <your_branch_name>  -> Resolve conflicts -> Merge.
 # Add comments so it is clear for everyone.
 # Then delete your branch to keep the branches clean.
 ```
