@@ -35,7 +35,7 @@ function ChatWidget() {
 
     return (
         <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className="fixed bottom-4 right-4 z-[9999] flex items-end space-x-2">
-            {isOpen && <ChatWindow />}
+            {isOpen && <ChatWindow setIsOpen={setIsOpen} />}
             <div onClick={toggleIsOpen} className="bottom bg-blue-100 rounded-2xl shadow-md p-4 w-14 h-14 cursor-pointer flex items-center justify-center">
                 {logoUrl && <img className="w-full h-full object-contain" alt="Chat Icon" src={logoUrl} />}
             </div>

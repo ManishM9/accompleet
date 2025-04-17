@@ -5,7 +5,7 @@ import ChatWidget from './content/content';
 function App() {
 
   return (
-    <div className='h-[400px] w-[200px] bg-blue-400'>
+    <div className='h-[500px] w-[500px] bg-blue-400'>
       <ChatWidget />
     </div>
   );
