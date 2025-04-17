@@ -54,7 +54,7 @@ git push origin <your_branch_name>
 - Support for **dynamic categories or prompts**.
 - Add **event-driven dialog popups** attached to the floating logo:
   - Example: “All testcases passed!” → small success dialog.
-  - Example: “Solution Accepted!” → brief congratulatory popup.
+  - Example: “Solution Accepted!” → brief congratulatory dialog.
   - These dialog boxes will be **temporary** and disappear after a few seconds.
 
 ---
