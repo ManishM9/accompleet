@@ -11,7 +11,10 @@
     "build": "npm run build:popup && npm run build:content && npm run build:tailwind",
     "lint": "eslint .",
     "preview": "vite preview",
-    "watch": "vite build --watch"
+    "watch:popup": "vite build --watch",
+    "watch:content": "vite build --config vite.content.config.js --watch",
+    "watch:tailwind": "npx tailwindcss -i ./src/content/tailwind.input.css -o ./dist/content.css --watch",
+    "watch": "concurrently -k \"npm:watch:*\""
   },
   "dependencies": {
     "react": "^19.0.0",
@@ -24,6 +27,7 @@
     "@types/react-dom": "^19.0.4",
     "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.21",
+    "concurrently": "^9.1.2",
     "eslint": "^9.22.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",
