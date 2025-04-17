@@ -1,19 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
+import ChatWindow from "../Components/ChatWindow";
 
 function ChatWidget() {
-    const [logoUrl, setLogoUrl] = useState("Icons/people_logo.png");
+    const [logoUrl, setLogoUrl] = useState(null);
+    const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
         if (typeof chrome !== "undefined" && chrome.runtime?.getURL) {
             const url = chrome.runtime.getURL("Icons/people_logo.png");
             setLogoUrl(url);
+        } else {
+            setLogoUrl("Icons/people_logo.png");
         }
     }, []);
 
+    const toggleIsOpen = () => {
+        setIsOpen((prev) => !prev);
+    }
+
     return (
-        <div className="fixed bottom-4 right-4 z-[9999] bg-blue-100 rounded-2xl shadow-md p-4 w-14 h-14">
-            {logoUrl && <img className="w-fit h-fit" src={logoUrl} />}
+        <div className="fixed bottom-4 right-4 z-[9999] flex items-end space-x-2">
+            {isOpen && <ChatWindow />}
+            <div onClick={toggleIsOpen} className="bottom bg-blue-100 rounded-2xl shadow-md p-4 w-14 h-14 cursor-pointer flex items-center justify-center">
+                {logoUrl && <img className="w-full h-full object-contain" alt="Chat Icon" src={logoUrl} />}
+            </div>
         </div>
     );
 }
