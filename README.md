@@ -62,6 +62,8 @@ git push origin <your_branch_name>
   - `SmallWindow`
   - `BigWindow`
 
+---
+
 #### 🌟 Future Features:
 - Support for **dynamic categories or prompts**.
 - Add **event-driven dialog popups** attached to the floating logo:
