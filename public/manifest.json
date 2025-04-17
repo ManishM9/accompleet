@@ -29,6 +29,12 @@
         "js": ["content.js"],
         "css": ["content.css"]
       }
+    ],
+    "web_accessible_resources": [
+      {
+        "resources": ["Icons/people_logo.png"],
+        "matches": ["https://leetcode.com/*"]
+      }
     ]
   }
   
