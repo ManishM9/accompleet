@@ -16,6 +16,13 @@
       "16": "./Icons/people_logo.png",
       "48": "./Icons/people_logo.png",
       "128": "./Icons/people_logo.png"
-    }
+    },
+    "content_scripts": [
+      {
+        "matches": ["*://leetcode.com/problems/*"],
+        "js": ["content.js"],
+        "css": ["content.css"]
+      }
+    ]
   }
   
