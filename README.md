@@ -2,6 +2,33 @@
 
 Accelerate your learning on LeetCode!
 
+---
+
+### 🚀 Git Branching & Pull Request Workflow
+
+To ensure a clean and collaborative development process, **never commit directly to `main`**. Follow this branching workflow:
+
+```bash
+# Step 1: Pull the latest changes from main
+git pull origin main
+
+# Step 2: Create a new branch from main
+git checkout -b <your_branch_name>
+
+# Step 3: Make your changes...
+
+# Step 4: Stage and commit your changes
+git add .
+git commit -m "<your_commit_message>"
+
+# Step 5: Push your branch to GitHub
+git push origin <your_branch_name>
+
+# Go to Github UI -> Pull Requests -> base: main | comare: <your_branch_name>  -> Resolve conflicts -> Merge.
+# Add comments so it is clear for everyone.
+```
+
+
 
 ---
 
