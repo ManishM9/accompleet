@@ -4,6 +4,17 @@ Accelerate your learning on LeetCode!
 
 ---
 
+### 👷‍♂️ Best Way To Work
+
+-Open 2 terminals on VS Code.
+  1. One for dev changes: ```bash npm run dev```
+  2. One for build changes: ```bash npm run watch```
+
+-If you want to check the extension's work on LeetCode, just refresh the extension on chrome://extensions.(Since "npm run watch" is running the build gets continuously updated)
+-Then refresh the LeetCode page and your changes should be visible.
+
+---
+
 ### 🚀 Git Branching & Pull Request Workflow
 
 To ensure a clean and collaborative development process, **never commit directly to `main`**. Follow this branching workflow:
