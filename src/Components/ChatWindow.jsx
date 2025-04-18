@@ -97,6 +97,11 @@ function ChatWindow(props) {
         } else {
             console.log(`Prompt selected is: ${level},${val} | ${prompts[level][val]}`);
             setLevel(null);
+            if (typeof chrome !== "undefined" && chrome.runtime?.sendMessage) {
+                chrome.runtime.sendMessage({ type: "PROMPT SEL", topic: level, promptNum: val, prompt: prompts[level][val] }, (res) => {
+                    console.log(`From Background: ${res.reply}`);
+                });
+            }
         }
     }
 
