@@ -1,10 +1,12 @@
 import React, { useEffect, useState, useRef } from "react";
 import { createRoot } from "react-dom/client";
 import ChatWindow from "../Components/ChatWindow";
+import ChatWindowBig from "../Components/ChatWindowBig";
 
 function ChatWidget() {
     const [logoUrl, setLogoUrl] = useState(null);
-    const [isOpen, setIsOpen] = useState(false);
+    const [winSel, setWinSel] = useState(0);
+    const [bigWinOpen, setBigWinOpen] = useState(false);
 
     const leaveTimeout = useRef(null);
 
@@ -18,12 +20,28 @@ function ChatWidget() {
     }, []);
 
     const toggleIsOpen = () => {
-        setIsOpen((prev) => !prev);
+        if (winSel===0) {
+            if (bigWinOpen){
+                setWinSel(2);
+            } else {
+                setWinSel(1);
+            }
+        } else {
+            setWinSel(0);
+        }
     }
+
+    useEffect(() => {
+        if (winSel===2) {
+            setBigWinOpen(true);
+        } else if (winSel===1) {
+            setBigWinOpen(false);
+        }
+    }, [winSel]);
 
     const handleMouseLeave = () => {
         leaveTimeout.current = setTimeout(() => {
-            setIsOpen(false);
+            setWinSel(0);
         }, 400);
     };
 
@@ -35,7 +53,8 @@ function ChatWidget() {
 
     return (
         <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className="fixed bottom-4 right-4 z-[9999] flex items-end space-x-2">
-            {isOpen && <ChatWindow setIsOpen={setIsOpen} />}
+            {winSel==1 && <ChatWindow setWinSel={setWinSel} />}
+            {winSel==2 && <ChatWindowBig setWinSel={setWinSel} />}
             <div onClick={toggleIsOpen} className="bottom bg-blue-100 rounded-2xl shadow-md p-4 w-14 h-14 cursor-pointer flex items-center justify-center">
                 {logoUrl && <img className="w-full h-full object-contain" alt="Chat Icon" src={logoUrl} />}
             </div>

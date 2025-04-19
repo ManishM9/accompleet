@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 function ChatWindow(props) {
-    const {setIsOpen} = props;
+    const {setWinSel} = props;
 
     const [activeList, setActiveList] = useState([]);
     const [level, setLevel] = useState(null);
@@ -110,8 +110,8 @@ function ChatWindow(props) {
             <div className="flex flex-row h-10 w-full bg-yellow-100">
                 {level!==null && <button className="items-start bg-red-100 p-2" onClick={() => setLevel(null)}>Back</button>}
                 <div className="flex flex-row ml-auto space-x-1">
-                    <button className="bg-orange-100 p-2">Chat</button>
-                    <button className="bg-red-100 p-2" onClick={() => setIsOpen(false)}>X</button>
+                    <button className="bg-orange-100 p-2" onClick={() => setWinSel(2)}>Chat</button>
+                    <button className="bg-red-100 p-2" onClick={() => setWinSel(0)}>X</button>
                 </div>
             </div>
             
