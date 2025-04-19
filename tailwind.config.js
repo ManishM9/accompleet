@@ -7,7 +7,11 @@ export default {
     "./src/content/**/*.{js,jsx}"
   ],
   theme: {
-    extend: {},
+    extend: {
+      spacing: {
+        128: '32rem',
+      }
+    },
   },
   plugins: [],
 }
