@@ -14,9 +14,14 @@
     "watch:popup": "vite build --watch",
     "watch:content": "vite build --config vite.content.config.js --watch",
     "watch:tailwind": "npx tailwindcss -i ./src/content/tailwind.input.css -o ./dist/content.css --watch",
-    "watch": "concurrently -k \"npm:watch:*\""
+    "watch": "concurrently -k \"npm:watch:*\"",
+    "server": "node --env-file=.env server"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.24.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
