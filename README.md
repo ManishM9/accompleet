@@ -70,5 +70,6 @@ git push origin <your_branch_name>
   - Example: “All testcases passed!” → small success dialog.
   - Example: “Solution Accepted!” → brief congratulatory dialog.
   - These dialog boxes will be **temporary** and disappear after a few seconds.
+  - BigWindow - pagination or lazy loading as per API request
 
 ---
