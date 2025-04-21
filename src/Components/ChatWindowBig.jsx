@@ -1,22 +1,23 @@
 import React, {useState} from "react";
 
 function ChatWindowBig(props) {
-    const {setWinSel} = props;
-    const [messages, setMessages] = useState([{from : "accompleet", text : "Hi! I am accompleet bot! There to help"}]);
+    const {setWinSel, messages, sendPrompt} = props;
+    
     const [input, setInput] = useState("");
     
     const handleSend = () => {
         const trimmedInput = input.trim();
         if (trimmedInput === "") return;
-        const updatedMessages = [...messages, {from: "user", text: trimmedInput}];
-        setMessages(updatedMessages);
+        sendPrompt(trimmedInput);
+        // const updatedMessages = [...messages, {from: "user", text: trimmedInput}];
+        // setMessages(updatedMessages);
         setInput("");
-        setTimeout(() => {
-            setMessages(prev => [
-                ...prev,
-                { from: "accompleet", text: "API hit check!" }
-            ]);
-        }, 600);
+        // setTimeout(() => {
+        //     setMessages(prev => [
+        //         ...prev,
+        //         { from: "accompleet", text: "API hit check!" }
+        //     ]);
+        // }, 600);
     }
 
     return (
@@ -49,7 +50,7 @@ function ChatWindowBig(props) {
             </div>
             <div className="p-2 bg-white flex gap-2">
                 <input
-                    className="flex-1 p-2 border border-gray-300 rounded text-black"
+                    className="flex-1 p-2 border border-gray-300 rounded text-white"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     placeholder="Type a message..."

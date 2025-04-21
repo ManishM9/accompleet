@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 function ChatWindow(props) {
-    const {setWinSel} = props;
+    const {setWinSel, sendPrompt} = props;
 
     const [activeList, setActiveList] = useState([]);
     const [level, setLevel] = useState(null);
@@ -69,15 +69,7 @@ function ChatWindow(props) {
             console.log(`Prompt selected is: ${tempLevel},${val} | ${prompts[tempLevel][val]}`);
             setLevel(null);
 
-            const titleProblem = document.querySelector('a[href^="/problems/"][class*="cursor-text"]')?.innerText;
-            const descriptionElem = document.querySelector('[data-track-load="description_content"]');
-            const descriptionText = descriptionElem?.innerText;
-
-            if (typeof chrome !== "undefined" && chrome.runtime?.sendMessage) {
-                chrome.runtime.sendMessage({ type: "PROMPT SEL", topic: tempLevel, promptNum: val, prompt: prompts[tempLevel][val], titleProblem, descriptionText }, (res) => {
-                    console.log(`From Background: ${res.data.response}`);
-                });
-            }
+            sendPrompt(prompts[tempLevel][val]);
         }
     }
 
