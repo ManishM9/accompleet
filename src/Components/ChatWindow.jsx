@@ -7,78 +7,48 @@ function ChatWindow(props) {
     const [level, setLevel] = useState(null);
 
     const topics = [
-        "Description",
-        "Test cases",
-        "Code",
-        "Lala",
-        "Lala2",
-        "Lala3",
-        "Lala4"
+        "Problem Description",
+        "Examples & Test Cases",
+        "Approach & Strategy",
+        "Optimization & Complexity",
+        "Debugging & Errors",
     ];
 
     const prompts = [
         [
-            "Prompt1",
-            "Prompt2",
-            "Prompt3",
-            "Prompt4",
-            "Prompt5",
+            "Explain the problem in simple terms",
+            "What is this question really asking?",
+            "Can you simplify the constraints for me?",
+            "How do I identify what data structure is needed?",
+            "Is this similar to any well-known problem?",
         ],
         [
-            "Prompt6",
-            "Prompt7",
-            "Prompt8",
-            "Prompt9",
-            "Prompt10",
+            "Walk me through the example input/output",
+            "Can you show how this input is processed step by step?",
+            "What are some edge cases I should test?",
+            "Generate a few more test cases",
+            "What kind of tricky inputs can cause bugs?",
         ],
         [
-            "Prompt11",
-            "Prompt12",
-            "Prompt13",
-            "Prompt14",
-            "Prompt15",
+            "How do I start solving this?",
+            "Should I try brute force first?",
+            "What approach would work best for this?",
+            "How do I decide on which approach to use?",
+            "What's a good way to think about this problem?",
         ],
         [
-            "Prompt16",
-            "Prompt17",
-            "Prompt18",
-            "Prompt19",
-            "Prompt20",
+            "What is the time complexity of my current approach?",
+            "Can this be solved faster than O(n**2)?",
+            "How do I reduce space complexity?",
+            "Can we solve this with dynamic programming?",
+            "Is there a way to avoid recursion here?",
         ],
         [
-            "Prompt1",
-            "Prompt2",
-            "Prompt3",
-            "Prompt4",
-            "Prompt5",
-        ],
-        [
-            "Prompt6",
-            "Prompt7",
-            "Prompt8",
-            "Prompt9",
-            "Prompt10",
-        ],
-        [
-            "Prompt11",
-            "Prompt12",
-            "Prompt13",
-            "Prompt14",
-            "Prompt15",
-        ],
-        [
-            "Prompt16",
-            "Prompt17",
-            "Prompt18",
-            "Prompt19",
-            "Prompt20",
-        ],
-        [
-            "Prompt1",
-            "Prompt2",
-            "Prompt3",
-            "Prompt4",
-            "Prompt5",
+            "Why is my solution failing this test case?",
+            "Explain why my output is wrong",
+            "I get a TLE — how do I fix it?",
+            "I don't know where my bug is — what should I do?",
+            "Help me debug this part of the code",
         ],
     ];
 
@@ -95,11 +65,17 @@ function ChatWindow(props) {
         if (level === null) {
             setLevel(val);
         } else {
-            console.log(`Prompt selected is: ${level},${val} | ${prompts[level][val]}`);
+            let tempLevel = level;
+            console.log(`Prompt selected is: ${tempLevel},${val} | ${prompts[tempLevel][val]}`);
             setLevel(null);
+
+            const titleProblem = document.querySelector('a[href^="/problems/"][class*="cursor-text"]')?.innerText;
+            const descriptionElem = document.querySelector('[data-track-load="description_content"]');
+            const descriptionText = descriptionElem?.innerText;
+
             if (typeof chrome !== "undefined" && chrome.runtime?.sendMessage) {
-                chrome.runtime.sendMessage({ type: "PROMPT SEL", topic: level, promptNum: val, prompt: prompts[level][val] }, (res) => {
-                    console.log(`From Background: ${res.reply}`);
+                chrome.runtime.sendMessage({ type: "PROMPT SEL", topic: tempLevel, promptNum: val, prompt: prompts[tempLevel][val], titleProblem, descriptionText }, (res) => {
+                    console.log(`From Background: ${res.data.response}`);
                 });
             }
         }
