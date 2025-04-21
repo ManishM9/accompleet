@@ -65,10 +65,16 @@ function ChatWindow(props) {
         if (level === null) {
             setLevel(val);
         } else {
-            console.log(`Prompt selected is: ${level},${val} | ${prompts[level][val]}`);
+            let tempLevel = level;
+            console.log(`Prompt selected is: ${tempLevel},${val} | ${prompts[tempLevel][val]}`);
             setLevel(null);
+
+            const titleProblem = document.querySelector('a[href^="/problems/"][class*="cursor-text"]')?.innerText;
+            const descriptionElem = document.querySelector('[data-track-load="description_content"]');
+            const descriptionText = descriptionElem?.innerText;
+
             if (typeof chrome !== "undefined" && chrome.runtime?.sendMessage) {
-                chrome.runtime.sendMessage({ type: "PROMPT SEL", topic: level, promptNum: val, prompt: prompts[level][val] }, (res) => {
+                chrome.runtime.sendMessage({ type: "PROMPT SEL", topic: tempLevel, promptNum: val, prompt: prompts[tempLevel][val], titleProblem, descriptionText }, (res) => {
                     console.log(`From Background: ${res.data.response}`);
                 });
             }

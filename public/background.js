@@ -15,7 +15,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             body: JSON.stringify({
                 topic: message.topic,
                 promptNum: message.promptNum,
-                prompt: message.prompt
+                prompt: message.prompt,
+                title: message.titleProblem,
+                description: message.descriptionText
             })
         }).then(res => res.json())
         .then(data => {
