@@ -43,7 +43,7 @@ app.post("/api/prompt", async (req, res) => {
     if (req.body.prompt.length > 2000) {
         res.status(400).json({ response: "ERROR" });
     }
-    const { topic, promptNum, prompt, title, description } = req.body;
+    const { prompt, title, description } = req.body;
     // console.log(topic, promptNum, prompt, title, description);
 
     let initialPC = `Problem Title: ${title}
