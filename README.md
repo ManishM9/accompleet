@@ -64,6 +64,13 @@ git push origin <your_branch_name>
 
 ---
 
+#### Redis Use Cases:
+- To store conversation history upto 5 interactions for each user.
+- To store precomputed prompts for certain "listed" prompts related to question description/testcases. (They will be same for any user and caching it will save on API Calls to the LLM and help with the token limit)
+- Store question title, description, testcases and any other static information for problems which Prompt-Engineering can take from instead of making a call to Leetcode for every time a user accesses it and uses our extension.
+
+---
+
 #### 🌟 Future Features:
 - Support for **dynamic categories or prompts**.
 - Add **event-driven dialog popups** attached to the floating logo:
