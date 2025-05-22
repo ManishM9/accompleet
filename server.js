@@ -1,6 +1,10 @@
 import express, { response } from "express";
 import cors from "cors";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import dotenv from 'dotenv';
+import { cacheResponse, getCachedResponse } from './cache.js';
+
+dotenv.config();
 
 const Gem_KEY = process.env.GEMINI_API_KEY;
 const genAI = new GoogleGenerativeAI(Gem_KEY);
@@ -13,7 +17,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
-async function getAIRes(promptContext) {
+async function getAIResponse(promptContext) {
     const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
     const prompt = `You are 'Accompleet', an expert competitive programmer helping someone understand, learn and code a leetcode problem.
@@ -23,45 +27,59 @@ async function getAIRes(promptContext) {
     The context of the LeetCode problem, question(from user related to the problem) and user's code(will be provided if applicable) will be given below, if it contains anything that does not relate to LeetCode or competitive coding or syntax doubts relating to the question, or if there is anything inappropriate, please politely decline to answer and just return a simple response something along the lines of 'Please ask relevant questions only' or something similar and do not entertain or answer further.
     `+promptContext;
 
-    // console.log(prompt);
-    // return "LALA";
-  
     const result = await model.generateContent(prompt.trim());
-    // console.log(result);
-    // console.log(result.response.text());
     return result.response.text();
 }
 
-// USAGE EXAMPLE
-// try {
-//     const aiReply = await getAIRes("What are your capabilties. What can you help me with using this API?");
-// } catch (error) {
-//     console.error("Gemini Error: ", error.message);
-// }
+async function getProblemDescription(slug) {
+    const response = await fetch(process.env.LEETCODE_GRAPHQL_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            query: `
+            query getProblemDetail($titleSlug: String!) {
+                question(titleSlug: $titleSlug) {
+                    content
+                }
+            }`,
+            variables: { titleSlug: slug }
+        })
+    });
+    const data = await response.json();
+    return data?.data?.question?.content || "Description not found";
+}
+
 
 app.post("/api/prompt", async (req, res) => {
-    if (req.body.prompt.length > 2000) {
-        res.status(400).json({ response: "ERROR" });
-    }
-    const { prompt, title, description } = req.body;
-    // console.log(topic, promptNum, prompt, title, description);
-
-    let initialPC = `Problem Title: ${title}
     
-    Problem Description:
-    ${description}
-    
-    Question/Prompt:
-    ${prompt}`;
-
+    const { problemSlug, promptType } = req.body;
     try {
-        const aiReply = await getAIRes(initialPC);
-        res.status(200).json({ response: aiReply });
+        const cachedResponse = await getCachedResponse(problemSlug, promptType);
+
+        //Check Cache
+        if (cachedResponse) {
+            console.log(`Cache hit for ${problemSlug}:${promptType}`);
+            return res.status(200).json({ response: cachedResponse });
+        }
+        
+        
+        //Generate on Cache Miss
+        const description = await getProblemDescription(problemSlug);
+        
+        const promptContext = `Problem Slug: ${problemSlug}. Description: ${description}. Prompt: ${promptType}`;
+        const aiResponse = await getAIResponse(promptContext);
+
+        //Cache the Response
+        await cacheResponse(problemSlug, promptType, aiResponse);
+
+        res.status(200).json({ response: aiResponse });
     } catch (error) {
-        console.error('Gemini ERROR: ', error.message);
+        console.error('Error handling prompt:', error.message);
         res.status(500).json({ response: "ERROR" });
     }
 });
+
+
 
 app.listen(PORT, () => {
     console.log(`Server Started on PORT ${PORT}`);
